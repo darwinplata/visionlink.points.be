@@ -18,8 +18,7 @@ class PointController extends Controller
     public function index()
     {
         // Return all points
-        $pointRow  = Point::all();
-        return response()->json($pointRow);
+        return Point::all();
     }
 
     /**
@@ -28,12 +27,12 @@ class PointController extends Controller
      * @param  \App\Models\Point  $point
      * @return \Illuminate\Http\Response
      */
-    public function show(Point $point)
+    public function show($id)
     {
         // Returns a particular point
         $pointRow = new Point;
-        $results = $pointRow->where('id', $point)->first();
-        return response()->json($point);  
+        $results = $pointRow->where('id', $id)->first();
+        return response()->json($results);  
     }
 
     /**
@@ -44,9 +43,15 @@ class PointController extends Controller
      */
     public function store(Request $request)
     {
+        /* Validate values */
+        $request->validate([
+            'name'=>'required',
+            'x'=>'required',
+            'y'=>'required'
+        ]);
+
         /* Create a new point */
         $pointRow = new Point; 
-
         $pointRow->name = $request->name;
         $pointRow->x = $request->x;
         $pointRow->y = $request->y;
@@ -79,12 +84,9 @@ class PointController extends Controller
      * @param  \App\Models\Point  $point
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Point $point)
+    public function destroy($id)
     {
-        /* Deletes an existing point */
-        $pointRow = new Point;
-        $pointRow->where('id', $point)->first();
-        $pointRow->delete(); 
+        Point::destroy($id);
         return response()->json("Row deleted successfully"); 
     }
 }
