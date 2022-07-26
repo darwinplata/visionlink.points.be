@@ -22,8 +22,8 @@ Route::get('/', function () {
 
 Route::middleware(['cors'])->group(function () {
     Route::get('/points/', 'App\Http\Controllers\PointController@index');
-    Route::get('/points/{point}', 'App\Http\Controllers\PointController@show');
+    Route::get('/points/{id}', 'App\Http\Controllers\PointController@show');
     Route::post('/points/', 'App\Http\Controllers\PointController@store');
-    Route::post('/points/{point}', 'App\Http\Controllers\PointController@update');
-    Route::delete('/points/{point}', 'App\Http\Controllers\PointController@destroy');
+    Route::post('/points/{id}', 'App\Http\Controllers\PointController@update');
+    Route::post('/points/delete/{id}', 'App\Http\Controllers\PointController@destroy');
 });

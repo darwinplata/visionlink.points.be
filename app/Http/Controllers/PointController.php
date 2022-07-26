@@ -66,16 +66,15 @@ class PointController extends Controller
      * @param  \App\Models\Point  $point
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Point $point)
+    public function update(Request $request, $id)
     {
         /* Update an existing point */
-        $pointRow = new Point;
-        $pointRow->where('id', $point)->first();
+        $pointRow = Point::find($id);
         $pointRow->name = $request->name;
         $pointRow->x = $request->x;
         $pointRow->y = $request->y;
         $pointRow->save();
-        return response()->json("Row updated successfully"); 
+        return response()->json("Now it's working: Row updated successfully"); 
     }
 
     /**
@@ -86,7 +85,8 @@ class PointController extends Controller
      */
     public function destroy($id)
     {
-        Point::destroy($id);
+        $pointRow = Point::find($id);
+        $pointRow->delete();
         return response()->json("Row deleted successfully"); 
     }
 }
